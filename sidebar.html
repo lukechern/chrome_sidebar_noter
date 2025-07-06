@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>侧边栏记事本</title>
+    <link rel="stylesheet" href="sidebar.css">
+</head>
+<body class="theme-light">
+    <!-- 顶部标签栏 -->
+    <div class="tabs_bar_7ree">
+        <div class="tab_item_7ree active" data-tab="noter">
+            浏览器记事
+        </div>
+        <div class="tab_item_7ree" data-tab="exchange">
+            文本中转站
+        </div>
+    </div>
+
+    <!-- 编辑器容器 -->
+    <div id="editor-container"></div>
+
+    <!-- 底部状态栏 -->
+    <div class="statusbar_7ree">
+        <div class="statusbar_left_7ree">
+            <span id="last-save-time">从未保存</span>
+        </div>
+        <div class="statusbar_right_7ree">
+            <div class="statusbar_icon_7ree" id="save-icon" title="保存">
+                <svg viewBox="0 0 24 24">
+                    <path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/>
+                </svg>
+            </div>
+            <div class="statusbar_icon_7ree" id="settings-icon" title="设置">
+                <svg viewBox="0 0 24 24">
+                    <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <!-- 设置对话框 -->
+    <div class="settings_dialog_7ree" id="settings-dialog" style="display: none;">
+        <div class="settings_content_7ree">
+            <div class="settings_item_7ree">
+                <div class="theme_selection_container_7ree">
+                    <span class="theme_selection_label_7ree">主题选择</span>
+                    <div class="theme_label_container_7ree">
+                        <span class="theme_text_7ree">明亮</span>
+                        <label class="theme_switch_7ree">
+                            <input type="checkbox" id="theme-switch">
+                            <span class="theme_slider_7ree"></span>
+                        </label>
+                        <span class="theme_text_7ree">暗黑</span>
+                    </div>
+                </div>
+            </div>
+            <div class="settings_item_7ree">
+                <div class="auto_save_container_7ree">
+                    <span class="auto_save_label_7ree">自动保存时间</span>
+                    <div class="auto_save_control_7ree">
+                        <input type="range" id="auto-save-slider" class="auto_save_slider_7ree" min="3" max="60" value="3" step="1">
+                        <div class="slider_value_7ree" id="slider-value">3秒</div>
+                    </div>
+                </div>
+            </div>
+            <div class="settings_item_7ree">
+                <label for="exchange-url">文本中转站网址</label>
+                <input type="text" id="exchange-url" value="">
+            </div>
+            <div class="settings_buttons_7ree">
+                <button id="save-settings">保存设置</button>
+                <button id="cancel-settings">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 加载语言包 -->
+    <script src="lang_7ree.js"></script>
+    <!-- 加载Monaco Editor -->
+    <script src="lib/monaco-editor-0.52.2/min/vs/loader.js"></script>
+    <!-- 加载主脚本 -->
+    <script src="sidebar.js"></script>
+</body>
+</html>
