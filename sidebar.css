@@ -91,9 +91,18 @@ html, body, #editor-container {
     color: #1a73e8;
     /* border-color: #dadce0; */
 }
+.theme-dark .tab_item_7ree.active {
+    background-color: #094771;
+    color: #cccccc;
+}
 
 .tab_item_7ree.active:hover {
     background-color: #E8F0FE;
+}
+
+.theme-dark .tab_item_7ree.active:hover {
+    background-color: #035286;
+    color: #cccccc;
 }
 
 /* 编辑器容器添加上下边距，为顶部标签栏留出空间 */
@@ -390,6 +399,42 @@ body.theme-dark .settings_item_7ree select {
     height: 0;
 }
 
+/* 
+
+
+ .theme_slider_7ree:before {
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    left: 4px;
+    bottom: 4px;
+    transition: 0.4s;
+    background-color: white;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.theme_switch_7ree input:checked + .theme_slider_7ree:before {
+    transform: translateX(30px);
+    content: "🌙";
+    font-size: 16px;
+    height: 22px;
+    width: 22px;
+}
+
+.theme_switch_7ree input:not(:checked) + .theme_slider_7ree:before {
+    content: "☀️";
+    font-size: 16px;
+    height: 22px;
+    width: 22px;
+}  */
+
+
 .theme_slider_7ree {
     position: absolute;
     cursor: pointer;
@@ -410,18 +455,42 @@ body.theme-dark .settings_item_7ree select {
     left: 4px;
     bottom: 4px;
     background-color: white;
-    transition: 0.4s;
     border-radius: 50%;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transition: 0.4s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-size: 16px 16px;
+    background-repeat: no-repeat;
+    background-position: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.theme_switch_7ree input:checked + .theme_slider_7ree {
-    background-color: #4CAF50;
+/* ☀️ 红色太阳 */
+.theme_switch_7ree input:not(:checked) + .theme_slider_7ree:before {
+    background-image: url("data:image/svg+xml;utf8,<svg fill='%23FF5722' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M6.76 4.84l-1.8-1.79-1.42 1.41 1.79 1.8 1.43-1.42zm10.48 0l1.8-1.79 1.42 1.41-1.79 1.8-1.43-1.42zM12 4V1h-1v3h1zm0 19v-3h-1v3h1zm8-9h3v-1h-3v1zm-19 0h3v-1H1v1zm16.24 7.76l1.79 1.8 1.42-1.41-1.8-1.79-1.41 1.4zM4.84 17.24l-1.79 1.8 1.41 1.41 1.8-1.79-1.42-1.42zM12 6a6 6 0 100 12 6 6 0 000-12z'/></svg>");
 }
 
+/* 🌙 饱和金月亮 */
 .theme_switch_7ree input:checked + .theme_slider_7ree:before {
     transform: translateX(30px);
+    background-image: url("data:image/svg+xml;utf8,<svg fill='%23D8A500' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z'/></svg>");
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* 暗色主题下的滑块开关样式 */
 body.theme-dark .theme_slider_7ree {
@@ -432,9 +501,6 @@ body.theme-dark .theme_slider_7ree:before {
     background-color: #ddd;
 }
 
-body.theme-dark .theme_switch_7ree input:checked + .theme_slider_7ree {
-    background-color: #4CAF50;
-}
 
 /* 主题标签容器 - 修改为水平布局 */
 .theme_label_container_7ree {
@@ -558,14 +624,14 @@ body.theme-dark .settings_buttons_7ree button:last-child:hover {
 
 /* 滑块样式 */
 .auto_save_slider_7ree {
-    width: 100%;
+    width: 70%;
     height: 6px;
     border-radius: 3px;
     background: #e1e4e8;
     outline: none;
     -webkit-appearance: none;
     appearance: none;
-    margin: 10px 0;
+    margin: 0;
 }
 
 .theme-dark .auto_save_slider_7ree {
@@ -605,10 +671,11 @@ body.theme-dark .settings_buttons_7ree button:last-child:hover {
 }
 
 .slider_value_7ree {
-    text-align: center;
+    /* text-align: center; */
     font-size: 12px;
     color: #666;
-    margin-top: 5px;
+    margin-left: 10px;
+    /* margin-top: 5px; */
 }
 
 .theme-dark .slider_value_7ree {
@@ -651,8 +718,8 @@ body.theme-dark .settings_buttons_7ree button:last-child:hover {
 }
 
 .auto_save_control_7ree {
-    flex: 1;
+    /* flex: 1; */
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
 }
