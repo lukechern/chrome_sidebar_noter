@@ -576,9 +576,9 @@ body.theme-dark .settings_buttons_7ree button:last-child:hover {
     position: fixed;
     bottom: 40px;
     right: 20px;
-    background-color: #4CAF50;
+    background-color: #4caf4fe5;
     color: white;
-    padding: 10px 20px;
+    padding: 6px 10px;
     border-radius: 4px;
     font-size: 14px;
     font-family: Arial, sans-serif;
@@ -607,12 +607,12 @@ body.theme-dark .settings_buttons_7ree button:last-child:hover {
 /* iframe样式 */
 #exchange-frame {
     position: fixed;
-    top: 32px; /* 顶部标签栏高度 */
+    top: 34px; /* 顶部标签栏高度 */
     left: 0;
     right: 0;
     bottom: 30px; /* 底部状态栏高度 */
     width: 100%;
-    height: calc(100% - 62px); /* 减去顶部标签栏32px和底部状态栏30px */
+    height: calc(100% - 64px); /* 减去顶部标签栏34px和底部状态栏30px */
     border: none;
     background-color: #ffffff;
     display: none;
