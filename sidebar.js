@@ -452,15 +452,15 @@ async function initSidebar_7ree() {
             
             // 创建编辑器
             const editor = monaco.editor.create(document.getElementById('editor-container'), {
-                value: langJS_7ree.pl_welcome_message_7r + '\n\n' + langJS_7ree.pl_start_typing_7r,
-                language: 'plaintext',
                 theme: 'vs',
+                language: 'plaintext',
+                lineNumbers: 'on',
                 automaticLayout: true,
                 minimap: { enabled: false },
                 scrollBeyondLastLine: false,
                 wordWrap: 'on',
                 fontSize: 14,
-                lineHeight: 20,
+                lineHeight: 26,
                 padding: { top: 5, bottom: 5 },
                 scrollbar: {
                     vertical: 'visible',

@@ -4,7 +4,7 @@
     {
       "id": "default_notes_7ree",
       "name": "备忘录",
-      "viewState": "{\"cursorState\":[{\"inSelectionMode\":false,\"selectionStart\":{\"lineNumber\":2,\"column\":1},\"position\":{\"lineNumber\":2,\"column\":1}}],\"viewState\":{\"scrollLeft\":0,\"firstPosition\":{\"lineNumber\":1,\"column\":1},\"firstPositionDeltaTop\":0},\"contributionsState\":{\"editor.contrib.wordHighlighter\":false,\"editor.contrib.folding\":{\"lineCount\":2,\"provider\":\"indent\",\"foldedImports\":false}}}"
+      "viewState": "{\"cursorState\":[{\"inSelectionMode\":false,\"selectionStart\":{\"lineNumber\":1,\"column\":1},\"position\":{\"lineNumber\":1,\"column\":1}}],\"viewState\":{\"scrollLeft\":0,\"firstPosition\":{\"lineNumber\":1,\"column\":1},\"firstPositionDeltaTop\":0},\"contributionsState\":{\"editor.contrib.wordHighlighter\":false,\"editor.contrib.folding\":{\"lineCount\":1,\"provider\":\"indent\",\"foldedImports\":false}}}"
     },
     {
       "id": "cloud_notes_7ree",

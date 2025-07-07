@@ -99,8 +99,7 @@ html, body, #editor-container {
 /* 编辑器容器添加上下边距，为顶部标签栏留出空间 */
 #editor-container {
     height: calc(100% - 62px);
-    margin: 25px 0 5px 0;
-    padding: 5px;
+    margin: 32px 0 5px 0;
     box-sizing: border-box;
     background-color: #ffffff;
 }
@@ -348,6 +347,14 @@ body.theme-dark .settings_item_7ree label {
     border-radius: 4px;
     font-size: 14px;
     box-sizing: border-box;
+    background-color: white;
+    color: #333;
+}
+
+body.theme-dark .settings_item_7ree input[type="text"] {
+    background-color: #3c3c3c !important;
+    border-color: #555 !important;
+    color: #ffffff !important;
 }
 
 .settings_item_7ree select {
