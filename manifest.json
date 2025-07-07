@@ -1,11 +1,11 @@
 {
   "manifest_version": 3,
   "name": "Chrome Sidebar Noter",
-  "version": "1.0",
+  "version": "3.0",
   "description": "A simple noter in the browser sidebar using Monaco Editor.",
   "permissions": ["sidePanel", "storage"],
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "js/background.js"
   },
   "side_panel": {
     "default_path": "sidebar.html"
