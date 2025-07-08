@@ -40,7 +40,7 @@
     'pl_settings_theme_dark_7r' => '暗黑',
     'pl_settings_auto_save_interval_7r' => '自动保存时间',
     'pl_settings_exchange_url_7r' => '文本中转站网址',
-    'pl_settings_save_7r' => '保存设置',
+    'pl_settings_save_7r' => '保存',
     'pl_settings_cancel_7r' => '取消',
     'pl_manual_save_success_7r' => '手动保存成功',
     'pl_settings_saved_7r' => '设置已保存',

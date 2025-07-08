@@ -612,7 +612,7 @@ body.theme-dark .settings_buttons_7ree button:last-child:hover {
     right: 0;
     bottom: 30px; /* 底部状态栏高度 */
     width: 100%;
-    height: calc(100% - 64px); /* 减去顶部标签栏34px和底部状态栏30px */
+    height: calc(100% - 30px); 
     border: none;
     background-color: #ffffff;
     display: none;
