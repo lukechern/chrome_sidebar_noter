@@ -366,6 +366,17 @@ body.theme-dark .settings_item_7ree input[type="text"] {
     color: #ffffff !important;
 }
 
+.settings_item_7ree input[type="text"]:focus {
+    border-color: #DDDDDD !important;
+    outline: none !important; /* 可选：移除默认聚焦轮廓线 */
+}
+
+body.theme-dark .settings_item_7ree input[type="text"]:focus {
+    border-color: #555 !important;
+    outline: none !important; /* 可选：移除默认聚焦轮廓线 */
+}
+
+
 .settings_item_7ree select {
     width: 100%;
     padding: 8px;
@@ -532,7 +543,7 @@ body.theme-dark .theme_text_7ree {
 }
 
 .settings_buttons_7ree button {
-    padding: 8px 16px;
+    padding: 3px 10px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -722,4 +733,5 @@ body.theme-dark .settings_buttons_7ree button:last-child:hover {
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: flex-end; /* 水平右对齐 */
 }
