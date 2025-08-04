@@ -616,20 +616,21 @@ body.theme-dark .settings_buttons_7ree button:last-child:hover {
 }
 
 /* iframe样式 */
-#exchange-frame {
+#exchange-frame, #clipboard-frame {
     position: fixed;
     top: 34px; /* 顶部标签栏高度 */
     left: 0;
     right: 0;
     bottom: 30px; /* 底部状态栏高度 */
     width: 100%;
-    height: calc(100% - 30px); 
+    height: calc(100% - 64px); /* 34px(顶部) + 30px(底部) = 64px */
     border: none;
     background-color: #ffffff;
     display: none;
+    z-index: 100;
 }
 
-.theme-dark #exchange-frame {
+.theme-dark #exchange-frame, .theme-dark #clipboard-frame {
     background-color: #1e1e1e;
 }
 

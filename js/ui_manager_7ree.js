@@ -66,10 +66,15 @@ class StatusbarManager_7ree {
         autoSaveSlider.value = currentInterval;
         sliderValue.textContent = currentInterval + '秒';
         
-        // 异步设置中转站网址
-        chrome.storage.local.get('sidebar_noter_exchange_url', (result) => {
+        // 异步设置中转站网址和云剪贴板网址
+        chrome.storage.local.get(['sidebar_noter_exchange_url', 'sidebar_noter_clipboard_url'], (result) => {
             if (result.sidebar_noter_exchange_url) {
                 exchangeUrl.value = result.sidebar_noter_exchange_url;
+            }
+            
+            const clipboardUrl = document.getElementById('clipboard-url');
+            if (result.sidebar_noter_clipboard_url && clipboardUrl) {
+                clipboardUrl.value = result.sidebar_noter_clipboard_url;
             }
         });
         
@@ -106,12 +111,20 @@ class StatusbarManager_7ree {
                 window.tabsManager.setExchangeUrl(newExchangeUrl);
             }
             
+            // 保存云剪贴板网址
+            const clipboardUrl = document.getElementById('clipboard-url');
+            const newClipboardUrl = clipboardUrl ? clipboardUrl.value.trim() : '';
+            if (window.tabsManager) {
+                window.tabsManager.setClipboardUrl(newClipboardUrl);
+            }
+            
             // 保存主题设置
             const theme = themeSwitch.checked ? 'dark' : 'light';
             chrome.storage.local.set({ 
                 'sidebar_noter_theme': theme,
                 'sidebar_noter_auto_save_interval': newInterval,
-                'sidebar_noter_exchange_url': newExchangeUrl
+                'sidebar_noter_exchange_url': newExchangeUrl,
+                'sidebar_noter_clipboard_url': newClipboardUrl
             });
             
             showNotification_7ree(langJS_7ree.pl_settings_saved_7r);
@@ -147,6 +160,7 @@ class TabsManager_7ree {
     constructor() {
         this.currentTab = 'noter';
         this.exchangeUrl = '';
+        this.clipboardUrl = '';
         this.init();
     }
 
@@ -161,6 +175,8 @@ class TabsManager_7ree {
     }
 
     switchTab(tabName) {
+        console.log('switchTab called with:', tabName);
+        
         // 更新标签状态
         const tabItems = document.querySelectorAll('.tab_item_7ree');
         tabItems.forEach(tab => {
@@ -179,6 +195,8 @@ class TabsManager_7ree {
             this.showNoterTab();
         } else if (tabName === 'exchange') {
             this.showExchangeTab();
+        } else if (tabName === 'clipboard') {
+            this.showClipboardTab();
         }
     }
 
@@ -195,6 +213,12 @@ class TabsManager_7ree {
             exchangeFrame.style.display = 'none';
         }
         
+        // 隐藏云剪贴板iframe
+        const clipboardFrame = document.getElementById('clipboard-frame');
+        if (clipboardFrame) {
+            clipboardFrame.style.display = 'none';
+        }
+        
         // 显示状态栏
         const statusbar = document.querySelector('.statusbar_7ree');
         if (statusbar) {
@@ -207,6 +231,12 @@ class TabsManager_7ree {
         const editorContainer = document.getElementById('editor-container');
         if (editorContainer) {
             editorContainer.style.display = 'none';
+        }
+        
+        // 隐藏云剪贴板iframe
+        const clipboardFrame = document.getElementById('clipboard-frame');
+        if (clipboardFrame) {
+            clipboardFrame.style.display = 'none';
         }
         
         // 隐藏状态栏
@@ -227,6 +257,48 @@ class TabsManager_7ree {
         }
         exchangeFrame.style.display = 'block';
     }
+
+    showClipboardTab() {
+        console.log('showClipboardTab called, clipboardUrl:', this.clipboardUrl);
+        
+        // 隐藏编辑器
+        const editorContainer = document.getElementById('editor-container');
+        if (editorContainer) {
+            editorContainer.style.display = 'none';
+        }
+        
+        // 隐藏中转站iframe
+        const exchangeFrame = document.getElementById('exchange-frame');
+        if (exchangeFrame) {
+            exchangeFrame.style.display = 'none';
+        }
+        
+        // 隐藏状态栏
+        const statusbar = document.querySelector('.statusbar_7ree');
+        if (statusbar) {
+            statusbar.style.display = 'none';
+        }
+        
+        // 显示或创建云剪贴板iframe
+        let clipboardFrame = document.getElementById('clipboard-frame');
+        if (!clipboardFrame) {
+            console.log('Creating new clipboard iframe with URL:', this.clipboardUrl);
+            clipboardFrame = document.createElement('iframe');
+            clipboardFrame.id = 'clipboard-frame';
+            clipboardFrame.src = this.clipboardUrl || 'about:blank';
+            document.body.appendChild(clipboardFrame);
+        } else {
+            console.log('Updating existing clipboard iframe with URL:', this.clipboardUrl);
+            clipboardFrame.src = this.clipboardUrl || 'about:blank';
+        }
+        clipboardFrame.style.display = 'block';
+        
+        // 如果没有设置URL，显示提示
+        if (!this.clipboardUrl) {
+            console.log('No clipboard URL set, showing placeholder');
+            clipboardFrame.src = 'data:text/html,<html><body style="font-family:Arial;padding:20px;text-align:center;"><h3>请先在设置中配置云剪贴板网址</h3><p>点击右下角设置按钮进行配置</p></body></html>';
+        }
+    }
     
     // 设置中转站网址
     setExchangeUrl(url) {
@@ -236,6 +308,18 @@ class TabsManager_7ree {
             const exchangeFrame = document.getElementById('exchange-frame');
             if (exchangeFrame) {
                 exchangeFrame.src = url;
+            }
+        }
+    }
+    
+    // 设置云剪贴板网址
+    setClipboardUrl(url) {
+        this.clipboardUrl = url;
+        // 如果当前在clipboard标签，更新iframe
+        if (this.currentTab === 'clipboard') {
+            const clipboardFrame = document.getElementById('clipboard-frame');
+            if (clipboardFrame) {
+                clipboardFrame.src = url;
             }
         }
     }

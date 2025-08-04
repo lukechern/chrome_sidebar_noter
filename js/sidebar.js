@@ -87,7 +87,8 @@ async function initSidebar_7ree() {
         // 加载保存的设置
         const settingsResult = await chrome.storage.local.get([
             'sidebar_noter_auto_save_interval',
-            'sidebar_noter_exchange_url'
+            'sidebar_noter_exchange_url',
+            'sidebar_noter_clipboard_url'
         ]);
         
         if (settingsResult.sidebar_noter_auto_save_interval) {
@@ -96,6 +97,10 @@ async function initSidebar_7ree() {
         
         if (settingsResult.sidebar_noter_exchange_url) {
             tabsManager.setExchangeUrl(settingsResult.sidebar_noter_exchange_url);
+        }
+        
+        if (settingsResult.sidebar_noter_clipboard_url) {
+            tabsManager.setClipboardUrl(settingsResult.sidebar_noter_clipboard_url);
         }
         
         // 配置Monaco Editor
