@@ -77,6 +77,9 @@ async function initSidebar_7ree() {
         const statusbarManager = window.statusbarManager_7ree;
         const tabsManager = window.tabsManager_7ree;
         
+        // 确保全局可以访问tabsManager
+        window.tabsManager = tabsManager;
+        
         // 加载保存的主题设置
         const themeResult = await chrome.storage.local.get('sidebar_noter_theme');
         if (themeResult.sidebar_noter_theme === 'dark') {
@@ -93,17 +96,15 @@ async function initSidebar_7ree() {
             'sidebar_noter_tab2_name'
         ]);
         
+        console.log('Loaded settings on init:', settingsResult);
+        
         if (settingsResult.sidebar_noter_auto_save_interval) {
             storageManager.setAutoSaveInterval(settingsResult.sidebar_noter_auto_save_interval);
         }
         
-        if (settingsResult.sidebar_noter_exchange_url) {
-            tabsManager.setExchangeUrl(settingsResult.sidebar_noter_exchange_url);
-        }
-        
-        if (settingsResult.sidebar_noter_clipboard_url) {
-            tabsManager.setClipboardUrl(settingsResult.sidebar_noter_clipboard_url);
-        }
+        // 设置网址，即使是空字符串也要设置
+        tabsManager.setExchangeUrl(settingsResult.sidebar_noter_exchange_url || '');
+        tabsManager.setClipboardUrl(settingsResult.sidebar_noter_clipboard_url || '');
         
         // 更新标签显示名称
         if (window.statusbarManager_7ree && typeof window.statusbarManager_7ree.updateTabNames === 'function') {
