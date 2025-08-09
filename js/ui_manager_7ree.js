@@ -66,8 +66,26 @@ class StatusbarManager_7ree {
         autoSaveSlider.value = currentInterval;
         sliderValue.textContent = currentInterval + '秒';
         
-        // 异步设置中转站网址和云剪贴板网址
-        chrome.storage.local.get(['sidebar_noter_exchange_url', 'sidebar_noter_clipboard_url'], (result) => {
+        // 异步设置标签名称和网址
+        chrome.storage.local.get([
+            'sidebar_noter_exchange_url', 
+            'sidebar_noter_clipboard_url',
+            'sidebar_noter_tab1_name',
+            'sidebar_noter_tab2_name'
+        ], (result) => {
+            // 设置默认标签名称
+            const tab1Name = document.getElementById('tab1-name');
+            const tab2Name = document.getElementById('tab2-name');
+            
+            if (result.sidebar_noter_tab1_name && tab1Name) {
+                tab1Name.value = result.sidebar_noter_tab1_name;
+            }
+            
+            if (result.sidebar_noter_tab2_name && tab2Name) {
+                tab2Name.value = result.sidebar_noter_tab2_name;
+            }
+            
+            // 设置网址
             if (result.sidebar_noter_exchange_url) {
                 exchangeUrl.value = result.sidebar_noter_exchange_url;
             }
@@ -76,6 +94,9 @@ class StatusbarManager_7ree {
             if (result.sidebar_noter_clipboard_url && clipboardUrl) {
                 clipboardUrl.value = result.sidebar_noter_clipboard_url;
             }
+            
+            // 更新标签显示名称
+            this.updateTabNames(result.sidebar_noter_tab1_name, result.sidebar_noter_tab2_name);
         });
         
         dialog.style.display = 'flex';
@@ -105,13 +126,22 @@ class StatusbarManager_7ree {
             const newInterval = parseInt(autoSaveSlider.value);
             this.storageManager.setAutoSaveInterval(newInterval);
             
-            // 保存中转站网址
+            // 获取新的标签名称
+            const tab1Name = document.getElementById('tab1-name');
+            const tab2Name = document.getElementById('tab2-name');
+            const newTab1Name = tab1Name ? tab1Name.value.trim() : '文本中转站';
+            const newTab2Name = tab2Name ? tab2Name.value.trim() : '云剪贴板';
+            
+            // 保存标签名称
+            this.updateTabNames(newTab1Name, newTab2Name);
+            
+            // 保存中转站网址（现在是标签一网址）
             const newExchangeUrl = exchangeUrl.value.trim();
             if (window.tabsManager) {
                 window.tabsManager.setExchangeUrl(newExchangeUrl);
             }
             
-            // 保存云剪贴板网址
+            // 保存云剪贴板网址（现在是标签二网址）
             const clipboardUrl = document.getElementById('clipboard-url');
             const newClipboardUrl = clipboardUrl ? clipboardUrl.value.trim() : '';
             if (window.tabsManager) {
@@ -124,7 +154,9 @@ class StatusbarManager_7ree {
                 'sidebar_noter_theme': theme,
                 'sidebar_noter_auto_save_interval': newInterval,
                 'sidebar_noter_exchange_url': newExchangeUrl,
-                'sidebar_noter_clipboard_url': newClipboardUrl
+                'sidebar_noter_clipboard_url': newClipboardUrl,
+                'sidebar_noter_tab1_name': newTab1Name,
+                'sidebar_noter_tab2_name': newTab2Name
             });
             
             showNotification_7ree(langJS_7ree.pl_settings_saved_7r);
@@ -152,6 +184,21 @@ class StatusbarManager_7ree {
                 cancelSettings();
             }
         });
+    }
+    
+    // 更新标签显示名称
+    updateTabNames(tab1Name, tab2Name) {
+        // 更新标签栏显示名称
+        const exchangeTab = document.querySelector('[data-tab="exchange"]');
+        const clipboardTab = document.querySelector('[data-tab="clipboard"]');
+        
+        if (exchangeTab) {
+            exchangeTab.textContent = tab1Name || '文本中转站';
+        }
+        
+        if (clipboardTab) {
+            clipboardTab.textContent = tab2Name || '云剪贴板';
+        }
     }
 }
 
@@ -334,4 +381,4 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         console.error("storageManager_7ree is not defined. Cannot initialize UI Managers.");
     }
-}); 
+});

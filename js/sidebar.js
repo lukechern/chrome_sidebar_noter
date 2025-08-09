@@ -88,7 +88,9 @@ async function initSidebar_7ree() {
         const settingsResult = await chrome.storage.local.get([
             'sidebar_noter_auto_save_interval',
             'sidebar_noter_exchange_url',
-            'sidebar_noter_clipboard_url'
+            'sidebar_noter_clipboard_url',
+            'sidebar_noter_tab1_name',
+            'sidebar_noter_tab2_name'
         ]);
         
         if (settingsResult.sidebar_noter_auto_save_interval) {
@@ -101,6 +103,14 @@ async function initSidebar_7ree() {
         
         if (settingsResult.sidebar_noter_clipboard_url) {
             tabsManager.setClipboardUrl(settingsResult.sidebar_noter_clipboard_url);
+        }
+        
+        // 更新标签显示名称
+        if (window.statusbarManager_7ree && typeof window.statusbarManager_7ree.updateTabNames === 'function') {
+            window.statusbarManager_7ree.updateTabNames(
+                settingsResult.sidebar_noter_tab1_name,
+                settingsResult.sidebar_noter_tab2_name
+            );
         }
         
         // 配置Monaco Editor

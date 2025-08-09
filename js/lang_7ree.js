@@ -51,6 +51,11 @@
     'pl_file_not_found_7r' => '文件不存在',
     'pl_tab_noter_7r' => '浏览器记事',
     'pl_tab_exchange_7r' => '文本中转站',
+    'pl_tab_clipboard_7r' => '云剪贴板',
+    'pl_settings_tab1_name_7r' => '标签一名称',
+    'pl_settings_tab1_url_7r' => '标签一网址',
+    'pl_settings_tab2_name_7r' => '标签二名称',
+    'pl_settings_tab2_url_7r' => '标签二网址'
 **/
 
 // 语言包对象
@@ -104,5 +109,10 @@ window.langJS_7ree = {
     pl_file_read_error_7r: '文件读取失败',
     pl_file_not_found_7r: '文件不存在',
     pl_tab_noter_7r: '浏览器记事',
-    pl_tab_exchange_7r: '文本中转站'
-}; 
+    pl_tab_exchange_7r: '文本中转站',
+    pl_tab_clipboard_7r: '云剪贴板',
+    pl_settings_tab1_name_7r: '标签一名称',
+    pl_settings_tab1_url_7r: '标签一网址',
+    pl_settings_tab2_name_7r: '标签二名称',
+    pl_settings_tab2_url_7r: '标签二网址'
+};
