@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Chrome Sidebar Noter",
   "version": "3.0",
-  "description": "A simple noter in the browser sidebar using Monaco Editor.",
+  "description": "一个让你在浏览器中优雅记事的Chrome扩展，告别临时记事本的混乱时代！ A simple noter in the browser sidebar using Monaco Editor.",
   "permissions": ["sidePanel", "storage"],
   "background": {
     "service_worker": "js/background.js"

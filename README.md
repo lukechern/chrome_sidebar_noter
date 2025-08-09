@@ -1,4 +1,11 @@
-# 📝 Chrome侧边栏记事本 v2.0
+# 📝 Chrome侧边栏记事本 v3.0
+
+![Chrome Web Store](https://img.shields.io/badge/Chrome-Extension-blue)
+![GitHub release (latest by date)](https://img.shields.io/badge/version-v3.0-blue)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6-yellow)
+![GitHub](https://img.shields.io/github/license/lukechern/chrome_sidebar_noter)
+
+[English](#english-version) | [中文](#-chrome侧边栏记事本-v30)
 
 > 一个让你在浏览器中优雅记事的Chrome扩展，告别临时记事本的混乱时代！ 🎉
 
@@ -94,29 +101,11 @@
 
 本项目采用 [MIT许可证](LICENSE) 📜
 
-```
-MIT License
 
-Copyright (c) 2024 Chrome侧边栏记事本
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+## 免责声明
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-```
+本项目为个人兴趣开发，为爱分享，仅供学习交流使用。作者不对使用本项目产生的任何后果承担责任。
 
 ## 🙏 致谢
 
@@ -133,4 +122,122 @@ SOFTWARE.
 
 **⭐ 如果这个扩展对你有帮助，请给个Star支持一下！** ⭐
 
-*让记事变得简单，让生活更加美好！* 🌟 
+*让记事变得简单，让生活更加美好！* 🌟
+
+---
+
+## English Version
+
+# 📝 Chrome Sidebar Noter v3.0
+
+> An elegant note-taking Chrome extension that helps you告别 temporary notepads and混乱的时代！ 🎉
+
+## ✨ Key Features
+
+### 🖊️ Smart Note-Taking Features
+- **Monaco Editor**: Based on VS Code's editor with syntax highlighting
+- **Auto Save**: Never worry about forgetting to save again, with adjustable auto-save intervals from 3-60 seconds
+- **State Restoration**: Remember your scroll position and selection state, continue editing when you open it next time
+- **Theme Switching**: Bright/Dark themes for eye comfort and aesthetics
+
+### 🔄 Text Transfer Station
+- **Custom URL**: Configurable text transfer station pointing to a custom URL
+- **Seamless Switching**: Free switching between notepad and transfer station
+- **Independent Display**: Hide the status bar in transfer station mode for focused content
+
+### 🎨 Interface Design
+- **Compact Layout**: Top tab bar + editor + bottom status bar for maximum space utilization
+- **Responsive Design**: Adapts to different screen sizes
+- **Modern UI**: Rounded corners, shadows, transition animations, full of details
+
+### ⚙️ Personalization Settings
+- **Slider Control**: Use a slider to adjust auto-save time, more intuitive than a dropdown
+- **Real-time Preview**: Settings changes take effect immediately without restarting
+- **Configuration Persistence**: All settings are automatically saved and remain effective when you open it next time
+
+## 🚀 Installation Instructions
+
+### Method 1: Developer Mode Installation (Recommended)
+1. Download the project files to your local machine
+2. Open Chrome browser and go to `chrome://extensions/`
+3. Enable "Developer mode" in the top right corner 🔧
+4. Click "Load unpacked extension"
+5. Select the project folder to complete the installation!
+
+### Method 2: Packaged Installation
+1. Click "Pack extension" in developer mode
+2. Select the project folder to generate a `.crx` file
+3. Drag the `.crx` file to the extensions page to install
+
+## 📖 Usage Instructions
+
+### Basic Operations
+1. **Open Notepad**: Click the extension icon in the browser toolbar
+2. **Switch Tabs**: Click "Browser Notes" or "Text Transfer Station" at the top
+3. **Manual Save**: Click the 💾 icon in the bottom right corner or use the `Ctrl+S` shortcut
+4. **Open Settings**: Click the ⚙️ icon in the bottom right corner
+
+### Advanced Features
+- **Auto Save**: Content is automatically saved to local storage, no need to worry about loss
+- **Theme Switching**: Switch between bright/dark themes in settings
+- **Time Interval**: Use a slider to adjust auto-save frequency (3-60 seconds)
+- **URL Configuration**: Customize the URL of the text transfer station
+
+### Shortcuts
+- `Ctrl+S`: Manually save content
+- Tab switching: Click with mouse
+
+## 🛠️ Technical Architecture
+
+### Core Technologies
+- **Monaco Editor**: Powerful code editor
+- **Chrome Extension API**: Local storage and extension management
+- **Native JavaScript**: No framework dependencies, lightweight and efficient
+
+## 🎯 Version History
+
+### v3.0 (Current Version)
+- 🎨 Optimized interface design and configuration card UI again
+
+### v2.0
+- ✨ Added text transfer station feature
+- 🎨 Optimized interface design and theme system
+- ⚙️ Improved settings interface with slider control
+- 🐛 Fixed auto-save and scroll position issues
+- 📱 Optimized responsive layout
+
+### v1.0
+- 🎉 Basic notepad functionality
+- 💾 Auto-save mechanism
+- 🎨 Theme switching feature
+
+## 🤝 Contribution Guidelines
+
+Welcome to submit Issues and Pull Requests! 🎊
+
+## Disclaimer
+
+This project is developed out of personal interest and love for sharing, for learning and exchange purposes only. The author assumes no responsibility for any consequences arising from the use of this project.
+
+## 📄 License
+
+This project uses the [MIT License](LICENSE) 📜
+
+
+
+## 🙏 Acknowledgements
+
+- **Monaco Editor**: Thanks to Microsoft for providing an excellent editor
+- **Chrome Extension API**: Thanks to Google's extension platform
+- **All Contributors**: Thanks to everyone who has contributed to the project
+
+## 📞 Contact
+
+- 💡 GitHub: https://github.com/lukechern/chrome_sidebar_noter
+
+---
+
+**⭐ If this extension is helpful to you, please give it a Star for support!** ⭐
+
+*Make note-taking simple and life better!* 🌟
+
