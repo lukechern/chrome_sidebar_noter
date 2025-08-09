@@ -538,8 +538,14 @@ body.theme-dark .theme_text_7ree {
 .settings_buttons_7ree {
     display: flex;
     gap: 10px;
-    justify-content: flex-end;
+    justify-content: space-between;
+    align-items: center;
     margin-top: 20px;
+}
+
+.settings_buttons_right_7ree {
+    display: flex;
+    gap: 10px;
 }
 
 .settings_buttons_7ree button {
@@ -551,34 +557,34 @@ body.theme-dark .theme_text_7ree {
     transition: background-color 0.3s;
 }
 
-.settings_buttons_7ree button:first-child {
+.save_button_7ree {
     background-color: #4CAF50;
     color: white;
 }
 
-.settings_buttons_7ree button:first-child:hover {
+.save_button_7ree:hover {
     background-color: #45a049;
 }
 
-.settings_buttons_7ree button:last-child {
+#cancel-settings {
     background-color: #f5f5f5;
     color: #333;
     border: 1px solid #ddd;
 }
 
 /* 修复暗色主题取消按钮样式 */
-body.theme-dark .settings_buttons_7ree button:last-child {
+body.theme-dark #cancel-settings {
     background-color: #3c3c3c !important;
     color: #ffffff !important;
     border-color: #555 !important;
 }
 
-.settings_buttons_7ree button:last-child:hover {
+#cancel-settings:hover {
     background-color: #e8e8e8;
 }
 
 /* 修复暗色主题取消按钮悬停样式 */
-body.theme-dark .settings_buttons_7ree button:last-child:hover {
+body.theme-dark #cancel-settings:hover {
     background-color: #4f4f4f !important;
 }
 
@@ -735,4 +741,115 @@ body.theme-dark .settings_buttons_7ree button:last-child:hover {
     flex-direction: row;
     align-items: center;
     justify-content: flex-end; /* 水平右对齐 */
+}
+
+/* 清空缓存按钮样式 */
+.clear_cache_button_7ree {
+    padding: 5px 15px;
+    border: 1px solid #666; /* 灰色边框 */
+    border-radius: 4px;
+    background-color: #f5f5f5; /* 灰色背景 */
+    color: #d32f2f; /* 暗红色文字 */
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.clear_cache_button_7ree:hover {
+    background-color: #e0e0e0; /* 悬停时稍深的灰色背景 */
+    color: #d32f2f; /* 保持暗红色文字 */
+}
+
+body.theme-dark .clear_cache_button_7ree {
+    border-color: #666;
+    background-color: #3c3c3c; /* 暗色主题下的灰色背景 */
+    color: #d32f2f;
+}
+
+body.theme-dark .clear_cache_button_7ree:hover {
+    background-color: #4f4f4f; /* 暗色主题下悬停时稍深的灰色背景 */
+    color: #d32f2f;
+}
+
+/* 自定义确认对话框样式 */
+.confirm_dialog_7ree {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10001;
+}
+
+.confirm_content_7ree {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    min-width: 300px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    font-family: Arial, sans-serif;
+}
+
+body.theme-dark .confirm_content_7ree {
+    background-color: #2d2d30 !important;
+    color: #ffffff !important;
+}
+
+.confirm_message_7ree {
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 16px;
+    color: #333;
+}
+
+body.theme-dark .confirm_message_7ree {
+    color: #ffffff !important;
+}
+
+.confirm_buttons_7ree {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.confirm_button_7ree {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.confirm_button_7ree.yes {
+    background-color: #d32f2f; /* 暗红色 */
+    color: white;
+}
+
+.confirm_button_7ree.yes:hover {
+    background-color: #c62828; /* 暗红色悬停效果 */
+}
+
+.confirm_button_7ree.no {
+    background-color: #f5f5f5;
+    color: #333;
+    border: 1px solid #ddd;
+}
+
+body.theme-dark .confirm_button_7ree.no {
+    background-color: #3c3c3c !important;
+    color: #ffffff !important;
+    border-color: #555 !important;
+}
+
+.confirm_button_7ree.no:hover {
+    background-color: #e8e8e8;
+}
+
+body.theme-dark .confirm_button_7ree.no:hover {
+    background-color: #4f4f4f !important;
 }

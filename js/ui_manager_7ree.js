@@ -86,7 +86,7 @@ class StatusbarManager_7ree {
             }
             
             // 设置网址
-            if (result.sidebar_noter_exchange_url) {
+            if (result.sidebar_noter_exchange_url && exchangeUrl) {
                 exchangeUrl.value = result.sidebar_noter_exchange_url;
             }
             
@@ -184,6 +184,14 @@ class StatusbarManager_7ree {
                 cancelSettings();
             }
         });
+        
+        // 清空缓存按钮事件处理
+        const clearCacheBtn = document.getElementById('clear-cache-btn');
+        if (clearCacheBtn) {
+            clearCacheBtn.addEventListener('click', () => {
+                this.clearUrlCache();
+            });
+        }
     }
     
     // 更新标签显示名称
@@ -198,6 +206,68 @@ class StatusbarManager_7ree {
         
         if (clipboardTab) {
             clipboardTab.textContent = tab2Name || '云剪贴板';
+        }
+    }
+    
+    // 清空网址缓存
+    clearUrlCache() {
+        // 显示自定义确认对话框
+        const confirmDialog = document.getElementById('confirm-dialog');
+        if (confirmDialog) {
+            confirmDialog.style.display = 'flex';
+            
+            // 获取确认和取消按钮
+            const confirmYes = document.getElementById('confirm-yes');
+            const confirmNo = document.getElementById('confirm-no');
+            
+            // 确认按钮事件
+            const handleConfirm = () => {
+                // 清空标签一和标签二的网址缓存
+                chrome.storage.local.remove(['sidebar_noter_exchange_url', 'sidebar_noter_clipboard_url'], () => {
+                    // 重置输入框
+                    const exchangeUrl = document.getElementById('exchange-url');
+                    const clipboardUrl = document.getElementById('clipboard-url');
+                    
+                    if (exchangeUrl) {
+                        exchangeUrl.value = '';
+                    }
+                    
+                    if (clipboardUrl) {
+                        clipboardUrl.value = '';
+                    }
+                    
+                    // 通知用户
+                    showNotification_7ree('网址缓存已清空');
+                });
+                
+                // 隐藏确认对话框
+                confirmDialog.style.display = 'none';
+                
+                // 移除事件监听器
+                confirmYes.removeEventListener('click', handleConfirm);
+                confirmNo.removeEventListener('click', handleCancel);
+            };
+            
+            // 取消按钮事件
+            const handleCancel = () => {
+                // 隐藏确认对话框
+                confirmDialog.style.display = 'none';
+                
+                // 移除事件监听器
+                confirmYes.removeEventListener('click', handleConfirm);
+                confirmNo.removeEventListener('click', handleCancel);
+            };
+            
+            // 添加事件监听器
+            confirmYes.addEventListener('click', handleConfirm);
+            confirmNo.addEventListener('click', handleCancel);
+            
+            // 点击背景关闭对话框
+            confirmDialog.addEventListener('click', (e) => {
+                if (e.target === confirmDialog) {
+                    handleCancel();
+                }
+            });
         }
     }
 }
