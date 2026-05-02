@@ -446,8 +446,40 @@
     <script src="js/encryption_manager_7ree.js"></script>
     <!-- 加载UI管理器 -->
     <script src="js/ui_manager_7ree.js"></script>
-    <!-- 加载Monaco Editor -->
+    <!-- 加载Monaco Editor loader -->
     <script src="lib/monaco-editor-0.52.2/min/vs/loader.js"></script>
+    <!-- 配置 Monaco Environment - 必须在加载 Monaco 主模块之前设置 -->
+    <script>
+        // 同时设置 window 和 self，确保 Monaco 在任何作用域都能读取到
+        (function() {
+            var monacoEnv = {
+                getWorkerUrl: function (moduleId, label) {
+                    // 返回 null 禁用 Web Worker
+                    return null;
+                },
+                createWorker: function (moduleId, label) {
+                    // 返回空的 Worker 存根，避免创建失败
+                    return {
+                        postMessage: function() {},
+                        addEventListener: function() {},
+                        removeEventListener: function() {},
+                        terminate: function() {}
+                    };
+                }
+            };
+            
+            // 设置到所有可能的作用域
+            if (typeof window !== 'undefined') {
+                window.MonacoEnvironment = monacoEnv;
+            }
+            if (typeof self !== 'undefined') {
+                self.MonacoEnvironment = monacoEnv;
+            }
+            if (typeof globalThis !== 'undefined') {
+                globalThis.MonacoEnvironment = monacoEnv;
+            }
+        })();
+    </script>
     <!-- 加载主脚本 -->
     <script src="js/sidebar.js"></script>
 </body>

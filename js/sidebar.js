@@ -260,29 +260,30 @@ async function loadCurrentNote() {
 function loadNoteContent(note, content) {
     if (!window.currentEditor) return;
 
-    // 保存当前滚动位置（如果有的话）
-    const oldScrollPosition = window.currentEditor.getScrollPosition();
-
     // 设置编辑器内容
     window.currentEditor.setValue(content || '');
 
-    // 更新编辑器语言
-    monaco.editor.setModelLanguage(
-        window.currentEditor.getModel(),
-        note.language || 'plaintext'
-    );
+    // 更新编辑器语言（如果 API 可用）
+    if (monaco && monaco.editor && typeof monaco.editor.setModelLanguage === 'function') {
+        const model = window.currentEditor.getModel();
+        if (model) {
+            monaco.editor.setModelLanguage(model, note.language || 'plaintext');
+        }
+    }
 
     // 更新编辑器字体和行高
     const options = {};
     if (note.fontSize) options.fontSize = note.fontSize;
     if (note.lineHeight) options.lineHeight = note.lineHeight;
-    if (Object.keys(options).length > 0) {
+    if (Object.keys(options).length > 0 && typeof window.currentEditor.updateOptions === 'function') {
         window.currentEditor.updateOptions(options);
     }
 
-    // 更新主题
-    const isDarkTheme = document.body.classList.contains('theme-dark');
-    monaco.editor.setTheme(isDarkTheme ? 'vs-dark' : 'vs');
+    // 更新主题（如果 API 可用）
+    if (monaco && monaco.editor && typeof monaco.editor.setTheme === 'function') {
+        const isDarkTheme = document.body.classList.contains('theme-dark');
+        monaco.editor.setTheme(isDarkTheme ? 'vs-dark' : 'vs');
+    }
 
     updateEditorStatus();
 }
@@ -662,6 +663,11 @@ function highlightSearchMatches(searchText) {
 
     if (!searchText || window.searchMatches.length === 0) return;
 
+    // 检查 deltaDecorations API 是否可用
+    if (typeof editor.deltaDecorations !== 'function') {
+        return;
+    }
+
     // 创建装饰
     const decorations = window.searchMatches.map((match, index) => {
         const isCurrent = index === window.currentMatchIndex;
@@ -673,7 +679,7 @@ function highlightSearchMatches(searchText) {
             }
         };
         // 添加 stickiness 选项（如果 API 可用）
-        if (monaco && monaco.editor && monaco.editor.TrackedRangeStickiness) {
+        if (typeof monaco !== 'undefined' && monaco.editor && monaco.editor.TrackedRangeStickiness) {
             decoration.options.stickiness = monaco.editor.TrackedRangeStickiness.NeverGrowsWhenTypingAtEdges;
         }
         return decoration;
@@ -685,7 +691,7 @@ function highlightSearchMatches(searchText) {
 
 // 清除搜索装饰
 function clearSearchDecorations() {
-    if (window.currentEditor && window.searchDecorations) {
+    if (window.currentEditor && window.searchDecorations && typeof window.currentEditor.deltaDecorations === 'function') {
         window.currentEditor.deltaDecorations(window.searchDecorations, []);
         window.searchDecorations = null;
     }
@@ -712,8 +718,14 @@ function goToMatch(index) {
     if (!window.currentEditor || !window.searchMatches[index]) return;
 
     const match = window.searchMatches[index];
-    window.currentEditor.revealRangeInCenter(match.range);
-    window.currentEditor.setSelection(match.range);
+    
+    // 安全调用 API
+    if (typeof window.currentEditor.revealRangeInCenter === 'function') {
+        window.currentEditor.revealRangeInCenter(match.range);
+    }
+    if (typeof window.currentEditor.setSelection === 'function') {
+        window.currentEditor.setSelection(match.range);
+    }
 
     // 更新高亮
     highlightSearchMatches(document.getElementById('search-input').value);
@@ -735,13 +747,26 @@ function replaceCurrentMatch() {
 
     if (!match) return;
 
-    // 执行替换
-    window.currentEditor.executeEdits('replace', [
-        {
-            range: match.range,
-            text: replaceText
+    // 安全执行替换
+    if (typeof window.currentEditor.executeEdits === 'function') {
+        window.currentEditor.executeEdits('replace', [
+            {
+                range: match.range,
+                text: replaceText
+            }
+        ]);
+    } else if (typeof window.currentEditor.getModel === 'function') {
+        // 降级方案：直接修改模型
+        const model = window.currentEditor.getModel();
+        if (model && typeof model.applyEdits === 'function') {
+            model.applyEdits([
+                {
+                    range: match.range,
+                    text: replaceText
+                }
+            ]);
         }
-    ]);
+    }
 
     // 重新搜索
     performSearch();
