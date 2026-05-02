@@ -530,11 +530,11 @@ class TabsManager_7ree {
 
 // 在DOMContentLoaded事件中初始化UI管理器
 document.addEventListener('DOMContentLoaded', () => {
-    // 确保 storageManager_7ree 已加载
-    if (typeof storageManager_7ree !== 'undefined') {
-        window.statusbarManager_7ree = new StatusbarManager_7ree(storageManager_7ree);
+    // 确保 window.storageManager_7ree 已加载
+    if (typeof window.storageManager_7ree !== 'undefined') {
+        window.statusbarManager_7ree = new StatusbarManager_7ree(window.storageManager_7ree);
         window.tabsManager_7ree = new TabsManager_7ree();
     } else {
-        console.error("storageManager_7ree is not defined. Cannot initialize UI Managers.");
+        console.error("window.storageManager_7ree is not defined. Cannot initialize UI Managers.");
     }
 });
