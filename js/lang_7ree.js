@@ -114,5 +114,91 @@ window.langJS_7ree = {
     pl_settings_tab1_name_7r: '标签一名称',
     pl_settings_tab1_url_7r: '标签一网址',
     pl_settings_tab2_name_7r: '标签二名称',
-    pl_settings_tab2_url_7r: '标签二网址'
+    pl_settings_tab2_url_7r: '标签二网址',
+    
+    pl_note_switched_7r: '已切换笔记',
+    pl_note_created_7r: '已创建笔记',
+    pl_note_deleted_7r: '笔记已删除',
+    pl_note_name_required_7r: '请输入笔记名称',
+    pl_cannot_delete_last_note_7r: '不能删除最后一个笔记',
+    pl_saved_7r: '已保存',
+    pl_data_exported_7r: '数据已导出',
+    pl_data_imported_7r: '数据已导入',
+    pl_data_cleared_7r: '数据已清空',
+    pl_cache_cleared_7r: '网址缓存已清空',
+    pl_invalid_backup_file_7r: '无效的备份文件',
+    pl_import_failed_7r: '导入失败',
+    
+    pl_enter_password_7r: '请输入密码',
+    pl_password_error_7r: '密码错误，请重试',
+    pl_password_required_7r: '请输入密码',
+    pl_password_mismatch_7r: '两次输入的密码不一致',
+    
+    pl_confirm_clear_data_7r: '确定要清空所有数据吗？此操作不可恢复！',
+    pl_confirm_clear_cache_7r: '确定要清空标签一和标签二的网址缓存吗？',
+    pl_confirm_disable_encryption_7r: '确定要关闭加密吗？笔记内容将变为未加密状态。',
+    pl_confirm_delete_note_7r: '确定要删除笔记 "{name}" 吗？此操作不可恢复！',
+    pl_confirm_import_data_7r: '确定要导入数据吗？这将覆盖当前所有数据。',
+    
+    pl_note_list_7r: '笔记列表',
+    pl_search_notes_7r: '搜索笔记内容...',
+    pl_search_prev_7r: '上一个',
+    pl_search_next_7r: '下一个',
+    pl_search_case_sensitive_7r: '区分大小写',
+    pl_search_close_7r: '关闭搜索',
+    pl_search_replace_7r: '替换为...',
+    pl_search_replace_btn_7r: '替换',
+    pl_search_replace_all_7r: '全部',
+    pl_search_results_7r: '搜索结果',
+    
+    pl_global_settings_7r: '全局设置',
+    pl_settings_appearance_7r: '外观',
+    pl_settings_editor_7r: '编辑器',
+    pl_settings_storage_7r: '存储',
+    pl_settings_advanced_7r: '高级',
+    
+    pl_theme_mode_7r: '主题模式',
+    pl_theme_light_7r: '明亮',
+    pl_theme_dark_7r: '暗黑',
+    pl_auto_save_interval_7r: '自动保存间隔',
+    pl_seconds_7r: '秒',
+    
+    pl_default_language_7r: '默认语言',
+    pl_default_font_size_7r: '默认字体大小',
+    pl_default_line_height_7r: '默认行高',
+    pl_show_line_numbers_7r: '显示行号',
+    pl_show_minimap_7r: '显示小地图',
+    
+    pl_backup_count_7r: '备份数量',
+    pl_export_all_data_7r: '导出所有数据',
+    pl_import_data_7r: '导入数据',
+    pl_clear_all_data_7r: '清空所有数据',
+    
+    pl_note_settings_7r: '笔记设置',
+    pl_note_name_7r: '笔记名称',
+    pl_note_language_7r: '语言',
+    pl_note_font_size_7r: '字体大小',
+    pl_note_line_height_7r: '行高',
+    pl_encryption_protection_7r: '加密保护',
+    pl_set_password_7r: '设置密码',
+    pl_confirm_password_7r: '确认密码',
+    pl_delete_note_7r: '删除笔记',
+    
+    pl_enter_password_to_unlock_7r: '此笔记已加密，请输入密码解锁',
+    pl_unlock_7r: '解锁',
+    pl_cancel_7r: '取消',
+    
+    pl_new_note_7r: '新笔记',
+    pl_default_note_7r: '默认笔记',
+    pl_untitled_note_7r: '未命名笔记',
+    
+    pl_encrypted_7r: '已加密',
+    pl_unencrypted_7r: '未加密',
+    
+    pl_lines_7r: '行',
+    pl_editor_pos_7r: 'Ln {line}, Col {col}',
+    
+    pl_confirm_7r: '确定',
+    pl_no_7r: '取消',
+    pl_yes_7r: '确定'
 };
