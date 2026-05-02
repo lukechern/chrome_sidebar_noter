@@ -286,7 +286,7 @@ class NoteManager_7ree {
 
 // 在DOMContentLoaded事件中初始化NoteManager_7ree
 document.addEventListener('DOMContentLoaded', () => {
-    if (typeof storageManager_7ree !== 'undefined') {
-        window.noteManager_7ree = new NoteManager_7ree(storageManager_7ree);
+    if (typeof window.storageManager_7ree !== 'undefined') {
+        window.noteManager_7ree = new NoteManager_7ree(window.storageManager_7ree);
     }
 }); 

@@ -11,12 +11,27 @@ window.currentMatchIndex = 0;
 window.isCaseSensitive = false;
 window.encryptedNoteCache = {};
 
+// 禁用 Monaco Web Worker - 必须在加载 Monaco 之前设置
+window.MonacoEnvironment = {
+    getWorkerUrl: function (moduleId, label) {
+        return null;
+    },
+    createWorker: function (moduleId, label) {
+        return {
+            postMessage: function() {},
+            addEventListener: function() {},
+            removeEventListener: function() {},
+            terminate: function() {}
+        };
+    }
+};
+
 // 初始化函数
 async function initSidebar_7ree() {
     try {
         // 确保所有管理器已初始化
-        if (!storageManager_7ree) {
-            console.error("storageManager_7ree is not initialized");
+        if (!window.storageManager_7ree) {
+            console.error("window.storageManager_7ree is not initialized");
             return;
         }
 
@@ -35,16 +50,28 @@ async function initSidebar_7ree() {
         // 加载全局设置
         await loadGlobalSettings();
 
-        // 配置Monaco Editor
-        require.config({ paths: { 'vs': 'lib/monaco-editor-0.52.2/min/vs' } });
+        // 配置 Monaco Editor - 使用 chrome.runtime.getURL 获取正确的扩展路径
+        const monacoPath = chrome.runtime.getURL('lib/monaco-editor-0.52.2/min/vs');
+        require.config({ paths: { 'vs': monacoPath } });
 
         require(['vs/editor/editor.main'], async function() {
-            // 禁用Web Worker
-            self.MonacoEnvironment = {
-                getWorkerUrl: function (moduleId, label) {
-                    return null;
+            // 禁用 TypeScript/JavaScript 语义验证以避免 Worker 需求
+            if (monaco && monaco.languages && monaco.languages.typescript) {
+                try {
+                    monaco.languages.typescript.javascriptDefaults.setDiagnosticsOptions({
+                        noSemanticValidation: true,
+                        noSyntaxValidation: true,
+                        noSuggestionDiagnostics: true
+                    });
+                    monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
+                        noSemanticValidation: true,
+                        noSyntaxValidation: true,
+                        noSuggestionDiagnostics: true
+                    });
+                } catch (e) {
+                    console.log('禁用 TypeScript 验证时出错（可忽略）:', e);
                 }
-            };
+            }
 
             // 创建编辑器
             await createEditor();
@@ -56,9 +83,9 @@ async function initSidebar_7ree() {
             await loadCurrentNote();
 
             // 开始自动保存
-            if (storageManager_7ree) {
-                storageManager_7ree.startAutoSave(window.currentEditor);
-                console.log('自动保存已启动，间隔:', storageManager_7ree.autoSaveInterval, 'ms');
+            if (window.storageManager_7ree) {
+                window.storageManager_7ree.startAutoSave(window.currentEditor);
+                console.log('自动保存已启动，间隔:', window.storageManager_7ree.autoSaveInterval, 'ms');
             }
 
             console.log('Chrome Sidebar Noter 已就绪');
@@ -109,20 +136,29 @@ async function createEditor() {
         acceptSuggestionOnCommitCharacter: false
     });
 
-    // 监听编辑器变化
-    window.currentEditor.onDidChangeModelContent(() => {
-        updateEditorStatus();
-    });
+    // 监听编辑器变化 - 添加安全检查
+    if (window.currentEditor && typeof window.currentEditor.onDidChangeModelContent === 'function') {
+        window.currentEditor.onDidChangeModelContent(() => {
+            updateEditorStatus();
+        });
+    }
 
-    // 监听光标位置变化
-    window.currentEditor.onDidChangeCursorPosition(() => {
-        updateEditorStatus();
-    });
+    // 监听光标位置变化 - 这也会触发选择变化
+    if (window.currentEditor && typeof window.currentEditor.onDidChangeCursorPosition === 'function') {
+        window.currentEditor.onDidChangeCursorPosition(() => {
+            updateEditorStatus();
+        });
+    }
 
-    // 监听选择变化
-    window.currentEditor.onDidChangeSelection(() => {
-        updateEditorStatus();
-    });
+    // 监听选择变化（如果 API 可用）
+    if (window.currentEditor && typeof window.currentEditor.onDidChangeSelection === 'function') {
+        window.currentEditor.onDidChangeSelection(() => {
+            updateEditorStatus();
+        });
+    }
+
+    // 立即更新一次状态
+    updateEditorStatus();
 }
 
 // 更新编辑器状态栏
@@ -158,12 +194,12 @@ async function loadGlobalSettings() {
         'sidebar_noter_backup_count'
     ]);
 
-    if (result.sidebar_noter_auto_save_interval && storageManager_7ree) {
-        storageManager_7ree.setAutoSaveInterval(result.sidebar_noter_auto_save_interval);
+    if (result.sidebar_noter_auto_save_interval && window.storageManager_7ree) {
+        window.storageManager_7ree.setAutoSaveInterval(result.sidebar_noter_auto_save_interval);
     }
 
-    if (result.sidebar_noter_backup_count && storageManager_7ree) {
-        storageManager_7ree.backupCount = result.sidebar_noter_backup_count;
+    if (result.sidebar_noter_backup_count && window.storageManager_7ree) {
+        window.storageManager_7ree.backupCount = result.sidebar_noter_backup_count;
     }
 
     // 更新标签名称
@@ -587,14 +623,15 @@ function performSearch() {
 
     const model = window.currentEditor.getModel();
     
-    // 查找所有匹配
+    // 查找所有匹配 - 修正参数顺序
+    // 参数: searchString, searchOnlyEditableRange, isRegex, matchCase, wordSeparators, captureMatches
     window.searchMatches = model.findMatches(
         searchText,
-        true,              // 是否搜索整个模型
-        window.isCaseSensitive,  // 区分大小写
-        false,             // 正则表达式
-        null,              // 匹配大小写
-        true               // 只获取匹配计数
+        true,              // searchOnlyEditableRange: 搜索整个模型
+        false,             // isRegex: 不是正则表达式
+        window.isCaseSensitive,  // matchCase: 是否区分大小写
+        null,              // wordSeparators: 单词分隔符
+        true               // captureMatches: 捕获匹配
     );
 
     // 更新搜索计数
@@ -618,9 +655,7 @@ function performSearch() {
 function highlightSearchMatches(searchText) {
     if (!window.currentEditor) return;
 
-    // 使用Monaco的find功能
     const editor = window.currentEditor;
-    const model = editor.getModel();
 
     // 清除旧的装饰
     clearSearchDecorations();
@@ -630,14 +665,18 @@ function highlightSearchMatches(searchText) {
     // 创建装饰
     const decorations = window.searchMatches.map((match, index) => {
         const isCurrent = index === window.currentMatchIndex;
-        return {
+        const decoration = {
             range: match.range,
             options: {
                 className: isCurrent ? 'currentFindMatch' : 'findMatch',
-                isWholeLine: false,
-                stickiness: monaco.editor.TrackedRangeStickiness.NeverGrowsWhenTypingAtEdges
+                isWholeLine: false
             }
         };
+        // 添加 stickiness 选项（如果 API 可用）
+        if (monaco && monaco.editor && monaco.editor.TrackedRangeStickiness) {
+            decoration.options.stickiness = monaco.editor.TrackedRangeStickiness.NeverGrowsWhenTypingAtEdges;
+        }
+        return decoration;
     });
 
     // 应用装饰
@@ -1071,9 +1110,9 @@ async function saveGlobalSettings() {
     });
 
     // 应用设置
-    if (storageManager_7ree) {
-        storageManager_7ree.setAutoSaveInterval(autoSaveInterval);
-        storageManager_7ree.backupCount = backupCount;
+    if (window.storageManager_7ree) {
+        window.storageManager_7ree.setAutoSaveInterval(autoSaveInterval);
+        window.storageManager_7ree.backupCount = backupCount;
     }
 
     // 应用主题
@@ -1131,9 +1170,9 @@ async function handleManualSave() {
         await window.noteManager_7ree.updateNoteContent(note.id, content);
     }
 
-    if (storageManager_7ree) {
-        storageManager_7ree.lastSaveTime = new Date();
-        storageManager_7ree.updateLastSaveTime();
+    if (window.storageManager_7ree) {
+        window.storageManager_7ree.lastSaveTime = new Date();
+        window.storageManager_7ree.updateLastSaveTime();
     }
 
     showNotification_7ree('已保存');
@@ -1149,9 +1188,9 @@ function promptForPassword(message) {
 
 // 导出所有数据
 async function exportAllData() {
-    if (!storageManager_7ree) return;
+    if (!window.storageManager_7ree) return;
 
-    const exportData = await storageManager_7ree.exportAllData();
+    const exportData = await window.storageManager_7ree.exportAllData();
     if (!exportData) {
         showNotification_7ree('导出失败', 'error');
         return;
@@ -1184,9 +1223,9 @@ async function handleImportData(e) {
             const importData = JSON.parse(event.target.result);
             
             showConfirmDialog('确定要导入数据吗？这将覆盖当前所有数据。', async () => {
-                if (!storageManager_7ree) return;
+                if (!window.storageManager_7ree) return;
                 
-                const result = await storageManager_7ree.importAllData(importData);
+                const result = await window.storageManager_7ree.importAllData(importData);
                 
                 if (result.success) {
                     // 重新初始化
